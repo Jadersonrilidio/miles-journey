@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\TestimonyController;
+use App\Http\Responses\ApiResponse as Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::controller(TestimonyController::class)
+    ->whereUuid('testimony:uuid')
+    ->missing(fn () => Response::notFound())
+    ->group(function () {
+        Route::get('testimonies-home', 'home')->name('testimonies.home');
+
+        Route::get('testimonies', 'index')->name('testimonies.index');
+        Route::post('testimonies', 'store')->name('testimonies.store');
+        Route::get('testimonies/{testimony:uuid}', 'show')->name('testimonies.show');
+        Route::delete('testimonies/{testimony:uuid}', 'destroy')->name('testimonies.destroy');
+        Route::match(['put', 'patch'], 'testimonies/{testimony:uuid}', 'update')->name('testimonies.update');
+    });
