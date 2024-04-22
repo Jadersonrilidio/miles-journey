@@ -62,7 +62,7 @@ class Price implements ValueObject
      */
     private function formattedValue(): string
     {
-        return $this->numberFormatPerCurrency();
+        return $this->currencySymbol() . $this->numberFormatPerCurrency();
     }
 
     /**
@@ -73,9 +73,21 @@ class Price implements ValueObject
         $amount = $this->amount / 100;
 
         return match ($this->currency->value) {
-            'BRL' => 'R$' . number_format($amount, 2, ',', '.'),
-            'USD' => '$' . number_format($amount, 2),
-            'EUR' => '€' . number_format($amount, 2),
+            'BRL' => number_format($amount, 2, ',', '.'),
+            'USD' => number_format($amount, 2),
+            'EUR' => number_format($amount, 2),
+        };
+    }
+
+    /**
+     * 
+     */
+    private function currencySymbol(): string
+    {
+        return match ($this->currency->value) {
+            'BRL' => 'R$',
+            'USD' => '$',
+            'EUR' => '€',
         };
     }
 
@@ -92,6 +104,6 @@ class Price implements ValueObject
      */
     public function __toString(): string
     {
-        return $this->formattedValue();
+        return $this->formatted;
     }
 }
