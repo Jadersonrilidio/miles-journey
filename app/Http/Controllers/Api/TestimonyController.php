@@ -8,7 +8,6 @@ use App\Http\Requests\StoreTestimonyRequest;
 use App\Http\Requests\UpdateTestimonyRequest;
 use App\Http\Responses\ApiResponse as Response;
 use App\Models\Testimony;
-use Illuminate\Support\Facades\DB;
 
 class TestimonyController extends Controller
 {
@@ -31,12 +30,12 @@ class TestimonyController extends Controller
      */
     public function store(StoreTestimonyRequest $request)
     {
-        $inputPictureFilename = $this->storeProfilePicture($request->file('picture'));
+        $filename = $this->storeProfilePicture($request->file('picture'));
 
         $testimony = Testimony::create([
             'name' => $request->name,
             'testimony' => $request->testimony,
-            'picture' => $inputPictureFilename,
+            'picture' => $filename,
         ]);
 
         return Response::created($testimony);
@@ -72,7 +71,7 @@ class TestimonyController extends Controller
             $this->deleteProfilePicture($oldPicture);
         }
 
-        return Response::ok($testimony);
+        return Response::ok($testimony, 'resource updated');
     }
 
     /**
@@ -86,7 +85,7 @@ class TestimonyController extends Controller
             $this->deleteProfilePicture($testimony->picture);
         }
 
-        return Response::ok($testimony);
+        return Response::ok($testimony, 'resource deleted');
     }
 
     /**
