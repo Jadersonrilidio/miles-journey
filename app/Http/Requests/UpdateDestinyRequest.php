@@ -22,9 +22,12 @@ class UpdateDestinyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['min:3'],
-            'photo' => ['file', 'mimes:png,jpg,jpeg'],
+            'name' => ['string', 'min:3'],
             'price' => ['numeric'],
+            'photo_1' => ['file', 'mimes:png,jpg,jpeg'],
+            'photo_2' => ['file', 'mimes:png,jpg,jpeg'],
+            'meta' => ['string', 'min:3', 'max:160'],
+            'description' => ['string']
         ];
     }
 }

@@ -36,12 +36,16 @@ class DestinyController extends Controller
      */
     public function store(StoreDestinyRequest $request)
     {
-        $filename = $this->storeDestinyPhoto($request->file('photo'));
+        $filename_1 = $this->storeDestinyPhoto($request->file('photo_1'));
+        $filename_2 = $request->hasFile('photo_2') ? $this->storeDestinyPhoto($request->file('photo_2')) : null;
 
         $destiny = Destiny::create([
             'name' => $request->name,
             'price' => Price::USD($request->price),
-            'photo' => $filename,
+            'photo_1' => $filename_1,
+            'photo_2' => $filename_2,
+            'meta' => $request->meta,
+            'description' => $request->description ?? null,
         ]);
 
         return Response::created($destiny);
@@ -60,16 +64,26 @@ class DestinyController extends Controller
      */
     public function update(UpdateDestinyRequest $request, Destiny $destiny)
     {
-        $oldPhoto = $destiny->photo;
+        $oldPhoto1 = $destiny->photo_1;
+        $oldPhoto2 = $destiny->photo_2 ?? null;
 
         $inputData = $this->assertDataForUpdate($request);
 
         if (!$destiny->update($inputData)) {
-            $this->deleteDestinyPhoto($inputData['photo']);
+            $this->deleteDestinyPhoto($inputData['photo_1']);
+            if ($inputData['photo_2']) {
+                $this->deleteDestinyPhoto($inputData['photo_2']);
+            }
+
+            Response::badRequest();
         }
 
-        if ($request->hasFile('photo')) {
-            $this->deleteDestinyPhoto($oldPhoto);
+        if ($request->hasFile('photo_1')) {
+            $this->deleteDestinyPhoto($oldPhoto1);
+        }
+
+        if ($request->hasFile('photo_2') and $oldPhoto2) {
+            $this->deleteDestinyPhoto($oldPhoto2);
         }
 
         return Response::ok($destiny, 'resource updated');
@@ -81,10 +95,13 @@ class DestinyController extends Controller
     public function destroy(Destiny $destiny)
     {
         if ($destiny->delete()) {
-            $this->deleteDestinyPhoto($destiny->photo);
+            $this->deleteDestinyPhoto($destiny->photo_1);
+            if ($destiny->photo_2) {
+                $this->deleteDestinyPhoto($destiny->photo_2);
+            }
         }
 
-        return Response::ok($destiny, 'resrouce deleted');
+        return Response::ok($destiny, 'resource deleted');
     }
 
     /**
@@ -102,8 +119,20 @@ class DestinyController extends Controller
             $data['price'] = Price::USD($request->price);
         }
 
-        if ($request->hasFile('photo')) {
-            $data['photo'] = $this->storeDestinyPhoto($request->file('photo'));
+        if ($request->hasFile('photo_1')) {
+            $data['photo_1'] = $this->storeDestinyPhoto($request->file('photo_1'));
+        }
+
+        if ($request->hasFile('photo_2')) {
+            $data['photo_2'] = $this->storeDestinyPhoto($request->file('photo_2'));
+        }
+
+        if ($request->filled('meta')) {
+            $data['meta'] = $request->meta;
+        }
+
+        if ($request->filled('description')) {
+            $data['description'] = $request->description;
         }
 
         return $data;

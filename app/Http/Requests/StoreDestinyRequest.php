@@ -22,9 +22,12 @@ class StoreDestinyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3'],
-            'photo' => ['required', 'file', 'mimes:png,jpg,jpeg'],
+            'name' => ['required', 'string', 'min:3'],
+            'photo_1' => ['required', 'file', 'mimes:png,jpg,jpeg'],
+            'photo_2' => ['file', 'mimes:png,jpg,jpeg'],
             'price' => ['required', 'numeric'],
+            'meta' => ['required', 'string', 'min:3', 'max:160'],
+            'description' => ['string']
         ];
     }
 }

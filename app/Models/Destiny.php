@@ -4,8 +4,6 @@ namespace App\Models;
 
 use App\Casts\PriceCast;
 use App\Models\Traits\CreateWithUuid;
-use App\ValueObjects\Price;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,8 +25,11 @@ class Destiny extends Model
      */
     protected $fillable = [
         'name',
-        'photo',
+        'photo_1',
+        'photo_2',
         'price',
+        'meta',
+        'description',
     ];
 
     /**
@@ -47,7 +48,10 @@ class Destiny extends Model
      */
     protected $casts = [
         'name' => 'string',
-        'photo' => 'string',
+        'photo_1' => 'string',
+        'photo_2' => 'string',
         'price' => PriceCast::class,
+        'meta' => 'string',
+        'description' => 'string',
     ];
 }

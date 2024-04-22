@@ -82,6 +82,14 @@ class ApiResponse implements Responsable
     /**
      * 
      */
+    public static function badRequest(mixed $data = null, string $message = 'something went wrong'): static
+    {
+        return new static(Response::HTTP_BAD_REQUEST, ResponseStatus::Error, $message, $data);
+    }
+
+    /**
+     * 
+     */
     public static function notFound(mixed $data = null, string $message = 'resource not found'): static
     {
         return new static(Response::HTTP_NOT_FOUND, ResponseStatus::Error, $message, $data);
