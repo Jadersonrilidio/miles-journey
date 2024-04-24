@@ -3,8 +3,10 @@
 namespace App\ValueObjects;
 
 use App\Enums\Currency;
+use JsonSerializable;
+use Stringable;
 
-class Price implements ValueObject
+class Price implements Stringable, JsonSerializable
 {
     /**
      * 

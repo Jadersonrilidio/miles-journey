@@ -8,6 +8,7 @@ use App\Http\Requests\StoreDestinyRequest;
 use App\Http\Requests\UpdateDestinyRequest;
 use App\Http\Responses\ApiResponse as Response;
 use App\Models\Destiny;
+use App\Services\OpenAIService;
 use App\ValueObjects\Price;
 use Illuminate\Http\Request;
 
@@ -34,10 +35,12 @@ class DestinyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDestinyRequest $request)
+    public function store(StoreDestinyRequest $request, OpenAIService $openai)
     {
         $filename_1 = $this->storeDestinyPhoto($request->file('photo_1'));
         $filename_2 = $request->hasFile('photo_2') ? $this->storeDestinyPhoto($request->file('photo_2')) : null;
+
+        $description = $request->description ?? $openai->createDestinyDescription($request->name);
 
         $destiny = Destiny::create([
             'name' => $request->name,
@@ -45,7 +48,7 @@ class DestinyController extends Controller
             'photo_1' => $filename_1,
             'photo_2' => $filename_2,
             'meta' => $request->meta,
-            'description' => $request->description ?? null,
+            'description' => $description,
         ]);
 
         return Response::created($destiny);
