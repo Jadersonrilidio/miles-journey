@@ -21,13 +21,9 @@ class DestinyController extends Controller
      */
     public function index(Request $request)
     {
-        $locationName = $request->input('name');
+        $location = $request->query('name');
 
-        $destinies = Destiny::orderBy('created_at')
-            ->when($locationName, function ($query, string $locationName) {
-                $query->where('name', 'like', "%$locationName%");
-            })
-            ->get();
+        $destinies = Destiny::whereLocation($location)->get();
 
         return Response::ok($destinies);
     }

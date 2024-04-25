@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\DestinyBuilder;
 use App\Casts\PriceCast;
 use App\Models\Traits\CreateWithUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -54,4 +55,16 @@ class Destiny extends Model
         'meta' => 'string',
         'description' => 'string',
     ];
+
+    /**
+     * Create a new Eloquent query builder for the model.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public function newEloquentBuilder($query): DestinyBuilder
+    {
+        return new DestinyBuilder($query);
+    }
 }
