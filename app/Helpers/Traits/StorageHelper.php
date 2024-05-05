@@ -32,25 +32,25 @@ trait StorageHelper
     }
 
     /**
-     * Store the file with the profile picture config.
+     * Store the file.
      *
      * @param UploadedFile $file
      *
      * @return string Filename and URI link to image.
      */
-    public function storeDestinyPhoto(UploadedFile $file): string
+    public function storeDestinationPhoto(UploadedFile $file): string
     {
-        return $file->store('destinies', 'public');
+        return $file->store('destinations', 'public');
     }
 
     /**
-     * Delete a file within the public profile-picture folder.
+     * Delete a file.
      *
      * @param string $filename
      *
      * @return bool TRUE if the file is deleted with success, FALSE otherwise.
      */
-    public function deleteDestinyPhoto(string $filename): bool
+    public function deleteDestinationPhoto(string $filename): bool
     {
         return Storage::disk('public')->delete($filename);
     }

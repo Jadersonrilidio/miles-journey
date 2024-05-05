@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Destiny;
+use App\Models\Destination;
 use App\ValueObjects\OpenAIConfigBag;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -11,44 +11,29 @@ use Throwable;
 
 class OpenAIService
 {
-    /**
-     * 
-     */
     private const API_ENDPOINT_CHAT_COMPLETION = "https://api.openai.com/v1/chat/completions";
 
-    /**
-     * 
-     */
-    private const MAKE_DESTINY_DESCRIPTION_PROMPT = "Make a summary about the city {{ city }} emphasizing why this place is amazing. Use an informal language with a max of {{ characters }} characters for each paragraph. Make {{ paragraphs }} paragraphs for this summary.";
+    private const MAKE_DESTINATION_DESCRIPTION_PROMPT = "Make a summary about the city {{ city }} emphasizing why this place is amazing. Use an informal language with a max of {{ characters }} characters for each paragraph. Make {{ paragraphs }} paragraphs for this summary.";
 
-    /**
-     * 
-     */
     private string $characters = '150';
 
-    /**
-     * 
-     */
     private string $paragraphs = '2';
 
-    /**
-     * 
-     */
     public function __construct(private readonly OpenAIConfigBag $config)
     {
         //
     }
 
     /**
-     * Create a description according to destiny city name.
+     * Create a description according to destination city name.
      *
-     * @param  Destiny  $destiny
+     * @param  Destination  $destination
      *
      * @return string|null Returns the description as string or NULL in any case of failure.
      */
-    public function createDestinyDescription(Destiny $destiny): string|null
+    public function createDestinationDescription(Destination $destination): string|null
     {
-        $prompt = $this->buildPrompt($destiny->name);
+        $prompt = $this->buildPrompt($destination->name);
 
         try {
             $clientResponse = Http::withHeaders(
@@ -84,7 +69,7 @@ class OpenAIService
         $placeholders = array_keys($mapping);
         $values = array_values($mapping);
 
-        return str_replace($placeholders, $values, self::MAKE_DESTINY_DESCRIPTION_PROMPT);
+        return str_replace($placeholders, $values, self::MAKE_DESTINATION_DESCRIPTION_PROMPT);
     }
 
     /**

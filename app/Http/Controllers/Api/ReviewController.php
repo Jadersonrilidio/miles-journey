@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\Traits\StorageHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTestimonyRequest;
-use App\Http\Requests\UpdateTestimonyRequest;
+use App\Http\Requests\StoreReviewRequest;
+use App\Http\Requests\UpdateReviewRequest;
 use App\Http\Responses\ApiResponse as Response;
-use App\Models\Testimony;
+use App\Models\Review;
 
-class TestimonyController extends Controller
+class ReviewController extends Controller
 {
     use StorageHelper;
 
@@ -18,52 +18,52 @@ class TestimonyController extends Controller
      */
     public function index()
     {
-        $testimonies = Testimony::orderBy('created_at')->get();
+        $reviews = Review::orderBy('created_at')->get();
 
-        return Response::ok($testimonies);
+        return Response::ok($reviews);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreTestimonyRequest $request
+     * @param StoreReviewRequest $request
      */
-    public function store(StoreTestimonyRequest $request)
+    public function store(StoreReviewRequest $request)
     {
         $filename = $this->storeProfilePicture($request->file('picture'));
 
-        $testimony = Testimony::create([
+        $review = Review::create([
             'name' => $request->name,
-            'testimony' => $request->testimony,
+            'review' => $request->review,
             'picture' => $filename,
         ]);
 
-        return Response::created($testimony);
+        return Response::created($review);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Testimony $testimony
+     * @param Review $review
      */
-    public function show(Testimony $testimony)
+    public function show(Review $review)
     {
-        return Response::ok($testimony);
+        return Response::ok($review);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateTestimonyRequest $request
-     * @param Testimony $testimony
+     * @param UpdateReviewRequest $request
+     * @param Review $review
      */
-    public function update(UpdateTestimonyRequest $request, Testimony $testimony)
+    public function update(UpdateReviewRequest $request, Review $review)
     {
-        $oldPicture = $testimony->picture;
+        $oldPicture = $review->picture;
 
         $inputData = $this->assertDataForUpdate($request);
 
-        if (!$testimony->update($inputData)) {
+        if (!$review->update($inputData)) {
             $this->deleteProfilePicture($inputData['picture']);
         }
 
@@ -71,21 +71,21 @@ class TestimonyController extends Controller
             $this->deleteProfilePicture($oldPicture);
         }
 
-        return Response::ok($testimony, 'resource updated');
+        return Response::ok($review, 'resource updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Testimony $testimony
+     * @param Review $review
      */
-    public function destroy(Testimony $testimony)
+    public function destroy(Review $review)
     {
-        if ($testimony->delete()) {
-            $this->deleteProfilePicture($testimony->picture);
+        if ($review->delete()) {
+            $this->deleteProfilePicture($review->picture);
         }
 
-        return Response::ok($testimony, 'resource deleted');
+        return Response::ok($review, 'resource deleted');
     }
 
     /**
@@ -93,15 +93,15 @@ class TestimonyController extends Controller
      */
     public function home()
     {
-        $newestTestimonies = Testimony::inRandomOrder()->limit(3)->get();
+        $newestReviews = Review::inRandomOrder()->limit(3)->get();
 
-        return Response::ok($newestTestimonies);
+        return Response::ok($newestReviews);
     }
 
     /**
      * 
      */
-    private function assertDataForUpdate(UpdateTestimonyRequest $request): array
+    private function assertDataForUpdate(UpdateReviewRequest $request): array
     {
         $data = [];
 

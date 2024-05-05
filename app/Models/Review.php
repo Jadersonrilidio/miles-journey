@@ -6,7 +6,7 @@ use App\Models\Traits\CreateWithUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Testimony extends Model
+class Review extends Model
 {
     use HasFactory, CreateWithUuid;
 
@@ -15,7 +15,7 @@ class Testimony extends Model
      *
      * @var string
      */
-    protected $table = 'testimonies';
+    protected $table = 'reviews';
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +25,7 @@ class Testimony extends Model
     protected $fillable = [
         'name',
         'picture',
-        'testimony',
+        'review',
     ];
 
     /**
@@ -45,6 +45,6 @@ class Testimony extends Model
     protected $casts = [
         'name' => 'string',
         'picture' => 'string',
-        'testimony' => 'string',
+        'review' => 'string',
     ];
 }

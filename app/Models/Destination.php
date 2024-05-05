@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Builders\DestinyBuilder;
+use App\Builders\DestinationBuilder;
 use App\Casts\PriceCast;
 use App\Models\Traits\CreateWithUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Destiny extends Model
+class Destination extends Model
 {
     use HasFactory, CreateWithUuid;
 
@@ -17,7 +17,7 @@ class Destiny extends Model
      *
      * @var string
      */
-    protected $table = 'destinies';
+    protected $table = 'destinations';
 
     /**
      * The attributes that are mass assignable.
@@ -63,8 +63,8 @@ class Destiny extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
-    public function newEloquentBuilder($query): DestinyBuilder
+    public function newEloquentBuilder($query): DestinationBuilder
     {
-        return new DestinyBuilder($query);
+        return new DestinationBuilder($query);
     }
 }

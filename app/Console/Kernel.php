@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Jobs\CreateDestinyDescriptionsJob;
+use App\Jobs\CreateDestinationDescriptionsJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->job(
-            job: CreateDestinyDescriptionsJob::class,
+            job: CreateDestinationDescriptionsJob::class,
             connection: 'sync',
         )->hourly();
     }

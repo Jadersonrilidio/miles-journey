@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDestinyRequest extends FormRequest
+class StoreReviewRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,9 @@ class UpdateDestinyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'min:3'],
-            'price' => ['numeric'],
-            'photo_1' => ['file', 'mimes:png,jpg,jpeg'],
-            'photo_2' => ['file', 'mimes:png,jpg,jpeg'],
-            'meta' => ['string', 'min:3', 'max:160'],
-            'description' => ['string']
+            'name' => ['required', 'min:3', 'max:32'],
+            'picture' => ['required', 'file', 'mimes:png,jpg,jpeg'],
+            'review' => ['required', 'min:5'],
         ];
     }
 }

@@ -4,12 +4,12 @@ namespace App\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class DestinyBuilder extends Builder
+class DestinationBuilder extends Builder
 {
     /**
      * 
      */
-    public function whereLocation(string|null $location): self
+    public function whenLocation(string|null $location): self
     {
         return $this->orderBy('created_at')
             ->when($location, function ($query, string $location) {
