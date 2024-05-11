@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\DestinationController;
 use App\Http\Responses\ApiResponse as Response;
@@ -38,3 +39,9 @@ Route::controller(DestinationController::class)
         Route::delete('destinations/{destination:uuid}', 'destroy')->name('destinations.destroy');
         Route::match(['put', 'patch'], 'destinations/{destination:uuid}', 'update')->name('destinations.update');
     });
+
+Route::controller(AuthController::class)->prefix('/auth')->group(function () {
+    Route::post('/login', 'login')->name('auth.login');
+    Route::post('/register', 'register')->name('auth.register');
+    Route::middleware('auth:sanctum')->get('/me', 'me')->name('auth.me');
+});
