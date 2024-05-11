@@ -106,6 +106,6 @@ class OpenAIService
      */
     private function getMaxTokens(): int
     {
-        return (int) $this->characters * (int) $this->paragraphs;
+        return (int) ($this->characters / 3) * (int) $this->paragraphs;
     }
 }
