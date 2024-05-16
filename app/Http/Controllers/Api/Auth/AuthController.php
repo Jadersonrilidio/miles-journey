@@ -37,7 +37,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password,
-                'picture' => $fileName ?? null,
+                'picture' => $fileName,
             ]);
         } catch (Throwable $e) {
             if ($fileName) {
@@ -90,6 +90,6 @@ class AuthController extends Controller
      */
     public function me(Authenticatable $user)
     {
-        return $user;
+        return Response::ok($user);
     }
 }

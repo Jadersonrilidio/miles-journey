@@ -30,16 +30,4 @@ class StoreUserRequest extends FormRequest
             'picture' => ['file', 'mimes:png,jpg,jpeg'],
         ];
     }
-
-    public function userData()
-    {
-        $fileName = $this->hasFile('picture') ? $this->file('picture')->store('profile-pictures', 'public') : null;
-
-        return [
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => $this->password,
-            'picture' => $fileName ?? null,
-        ];
-    }
 }

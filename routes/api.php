@@ -22,22 +22,28 @@ Route::controller(ReviewController::class)
     ->missing(fn () => Response::notFound())
     ->group(function () {
         Route::get('reviews', 'index')->name('reviews.index');
-        Route::post('reviews', 'store')->name('reviews.store');
         Route::get('reviews/{review:uuid}', 'show')->name('reviews.show');
-        Route::delete('reviews/{review:uuid}', 'destroy')->name('reviews.destroy');
-        Route::match(['put', 'patch'], 'reviews/{review:uuid}', 'update')->name('reviews.update');
         Route::get('reviews-home', 'home')->name('reviews.home');
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('reviews', 'store')->name('reviews.store');
+            Route::delete('reviews/{review:uuid}', 'destroy')->name('reviews.destroy');
+            Route::match(['put', 'patch'], 'reviews/{review:uuid}', 'update')->name('reviews.update');
+        });
     });
 
 Route::controller(DestinationController::class)
     ->whereUuid('destination:uuid')
     ->missing(fn () => Response::notFound())
     ->group(function () {
-        Route::get('destinations', 'index')->name('destinations.index');
-        Route::post('destinations', 'store')->name('destinations.store');
         Route::get('destinations/{destination:uuid}', 'show')->name('destinations.show');
-        Route::delete('destinations/{destination:uuid}', 'destroy')->name('destinations.destroy');
-        Route::match(['put', 'patch'], 'destinations/{destination:uuid}', 'update')->name('destinations.update');
+        
+        Route::get('destinations', 'index')->name('destinations.index');
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('destinations', 'store')->name('destinations.store');
+            Route::delete('destinations/{destination:uuid}', 'destroy')->name('destinations.destroy');
+            Route::match(['put', 'patch'], 'destinations/{destination:uuid}', 'update')->name('destinations.update');
+        });
     });
 
 Route::controller(AuthController::class)->prefix('/auth')->group(function () {
