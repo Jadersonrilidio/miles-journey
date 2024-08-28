@@ -16,7 +16,7 @@ class DestinationSeeder extends Seeder
     {
         // #1 fixed destination
         Destination::create([
-            'name' => 'Atacama - Chile',
+            'name' => 'Atacama',
             'price' => Price::USD(262700),
             'photo_1' => 'img/atacama-01.png',
             'photo_2' => 'img/atacama-02.jpg',
@@ -26,7 +26,7 @@ class DestinationSeeder extends Seeder
 
         // #2 fixed destination
         Destination::create([
-            'name' => 'Kazan City - Russia',
+            'name' => 'Kazan',
             'price' => Price::USD(1206500),
             'photo_1' => 'img/kazan-01.jpg',
             'photo_2' => 'img/kazan-02.jpg',
@@ -36,7 +36,7 @@ class DestinationSeeder extends Seeder
 
         // #3 fixed destination
         Destination::create([
-            'name' => 'Marrakech - Morocco',
+            'name' => 'Marrakech',
             'price' => Price::USD(694900),
             'photo_1' => 'img/marrakech-01.jpg',
             'photo_2' => 'img/marrakech-02.jpeg',
@@ -46,7 +46,7 @@ class DestinationSeeder extends Seeder
 
         // #4 fixed destination
         Destination::create([
-            'name' => 'Saint Petersburg - Russia',
+            'name' => 'Saint Petersburg',
             'price' => Price::USD(1113600),
             'photo_1' => 'img/saint-petersburg-01.jpg',
             'photo_2' => 'img/saint-petersburg-02.jpg',
@@ -56,7 +56,7 @@ class DestinationSeeder extends Seeder
 
         // #5 fixed destination
         Destination::create([
-            'name' => 'Rio de Janeiro - Brazil',
+            'name' => 'Rio de Janeiro',
             'price' => Price::USD(34430),
             'photo_1' => 'img/rio-de-janeiro-01.jpg',
             'photo_2' => 'img/rio-de-janeiro-02.jpg',
@@ -66,7 +66,7 @@ class DestinationSeeder extends Seeder
 
         // #6 fixed destination
         Destination::create([
-            'name' => 'Jakarta - Indonesia',
+            'name' => 'Jakarta',
             'price' => Price::USD(1562100),
             'photo_1' => 'img/jakarta-01.jpg',
             'photo_2' => 'img/jakarta-02.jpg',
