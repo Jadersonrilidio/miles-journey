@@ -13,3 +13,6 @@ php artisan migrate --force
 
 echo "Seeding database..."
 php artisan db:seed --force
+
+echo "Creating storage symbolic links..."
+php artisan storage:link
