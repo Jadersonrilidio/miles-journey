@@ -14,6 +14,10 @@ class DestinationSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Destination::all()->count() > 0) {
+            return;
+        }
+
         // #1 fixed destination
         Destination::create([
             'name' => 'Atacama',

@@ -13,6 +13,10 @@ class ReviewSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Review::all()->count() > 0) {
+            return;
+        }
+
         // #1 fixed review
         Review::create([
             'name' => 'Lauro Mattos',
