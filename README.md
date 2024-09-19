@@ -41,7 +41,7 @@ In this Challenge, you will:
 - **Frontend Deployment:** Vercel Vite
 
 
-## Project Architecture
+## Project Folder Structure
 
 This project extends Laravel’s default structure with additional directories to improve modularity and code readability by isolating functionality. Below is a description of the added folders:
 
@@ -60,22 +60,22 @@ For Docker-based Laravel Render deployments, additional directories include:
 - `src/scripts/`: Post-build scripts (_e.g._, Composer and Artisan commands).
 
 
-## Features
+## Application Architecture & Key Features
 
-Here follows an overview of some key features implemented throughout the application:
+This section provides an overview of key features implemented throughout the application:
 
-- Integration with OpenAI API, available as a service [(see OpenAIService class)](./app/Services/OpenAIService.php).
-- Background tasks management with Laravel's task scheduling [(see)](./app/Console/Kernel.php).
-- Authentication and authorization features implemented with laravel Sanctum.
-- Helper traits and classes to abstract functionalities from Controllers [(see)](./app/Helpers/).
-- Auto-generated UUIDs for Models on creation [(see implementation here)](./app/Models/Traits/CreateWithUuid.php).
-- Request classes for abstracting input validation [(see)](./app/Http/Requests/).
-- API missing resources handling on routes registration files [(see api routes file)](./routes/api.php).
-- Higher order Response classes for abstracting API responses from the Controllers [(see ApiResponse class)](./app/Http/Responses/ApiResponse.php).
-- CORS Middleware implementation to control unregistered addresses access to API.
-- Custom EloquentBuilder classes for abstracting common database queries [(example)](./app/Builders/DestinationBuilder.php).
-- Cast classes for data conversion within Eloquent Models and database [(example)](./app/Casts/PriceCast.php).
-- ValueObject classes to manage value conversion and reduce handling errors [(example)](./app/ValueObjects/Price.php).
+- **OpenAI API Integration:** Available as a dedicated service. [(View OpenAIService class)](./app/Services/OpenAIService.php).
+- **Background Task Management:** Utilizes Laravel's task scheduling for background processes management. [(View implementation)](./app/Console/Kernel.php).
+- **Authentication & Authorization:** Implemented using Laravel Sanctum.
+- **Helper Traits & Classes:** Abstracts common functionalities from Controllers, improving code reusability and maintainability. [(View helpers)](./app/Helpers/).
+- **Auto-Generated UUIDs:** Automatically generates UUIDs for models upon creation, ensuring unique identifiers. [(View implementation)](./app/Models/Traits/CreateWithUuid.php).
+- **Request Validation:** Request classes abstract input validation logic, promoting clean and organized Controllers. [(View requests)](./app/Http/Requests/).
+- **API Response Abstraction:** Higher-order response classes abstract API responses from Controllers, standardizing response structure. [(View ApiResponse class)](./app/Http/Responses/ApiResponse.php).
+- **CORS Middleware:** Controls access to the API by unregistered addresses, enhancing security.
+- **Custom Eloquent Builder Classes:** Abstracts common database queries, making query logic reusable and easier to maintain. [(View example)](./app/Builders/DestinationBuilder.php).
+- **Cast Classes for Data Conversion:** Manages data conversion within Eloquent Models, ensuring consistency between models and the database. [(View example)](./app/Casts/PriceCast.php).
+- **Value Object Classes:** Handles value conversion and reduces errors in value management. [(View example)](./app/ValueObjects/Price.php).
+
 
 ## License
 
